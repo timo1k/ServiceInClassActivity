@@ -45,16 +45,28 @@ class MainActivity : AppCompatActivity() {
         )
 
         findViewById<Button>(R.id.startButton).setOnClickListener {
-            if (isConnected) {
+            if (isConnected && !(timerBinder.isRunning) ) {
                 timerBinder.start(100)
-            }
+                findViewById<Button>(R.id.startButton).apply {
+                    text = "Pause"
+                }
+            } else {
+                timerBinder.pause()
+                findViewById<Button>(R.id.startButton).apply {
+                    text = "Unpause"
+                }
 
+            }
         }
         
         findViewById<Button>(R.id.stopButton).setOnClickListener {
 
             if (isConnected) {
-                timerBinder.pause()
+                timerBinder.stop()
+                findViewById<Button>(R.id.startButton).apply {
+                    text = "Start"
+                }
+                timerTextView.text = "STOPPED"
             }
 
         }
